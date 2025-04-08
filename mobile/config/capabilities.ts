@@ -3,8 +3,8 @@ import { ANDROID_APP_PATH } from "../static/pathConstants";
 export const androidDeviceCapabilities = [
   {
     platformName: "Android",
-    "appium:platformVersion": "11",
-    "appium:deviceName": "Pixel 3",
+    "appium:platformVersion": "14",
+    "appium:deviceName": "Android",
     "appium:systemPort": 8200,
     "appium:automationName": "UiAutomator2",
     "appium:app": ANDROID_APP_PATH,
@@ -20,8 +20,8 @@ export const androidMultiDeviceCapabilities = [
   ...androidDeviceCapabilities,
   {
     platformName: "Android",
-    "appium:platformVersion": "10",
-    "appium:deviceName": "Nexus 6",
+    "appium:platformVersion": "14",
+    "appium:deviceName": "Android",
     "appium:systemPort": 8201,
     "appium:automationName": "UiAutomator2",
     "appium:app": ANDROID_APP_PATH,

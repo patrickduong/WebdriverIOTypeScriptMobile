@@ -4,22 +4,25 @@
     "description": "",
     "main": "index.js",
     "scripts": {
-      "test": "wdio run wdio.conf.ts",
-      "test:parallel": "wdio run wdio.conf.parallel.ts",
-      "report": "marge ./reports/wdio-ma-merged.json --reportTitle 'AppiumReport' --reportDir=./reports/ && move ./reports.html ./reports"
+        "test": "wdio run wdio.conf.ts",
+        "test:parallel": "wdio run wdio.conf.parallel.ts",
+        "report": "marge ./reports/wdio-ma-merged.json --reportTitle 'AppiumReport' --reportDir=./reports/ && move ./reports.html ./reports"
     },
     "keywords": [],
     "author": "",
     "license": "ISC",
     "devDependencies": {
-      "@wdio/appium-service": "^8.36.0",
-      "@wdio/cli": "^8.36.0",
-      "@wdio/json-reporter": "^8.36.0",
-      "@wdio/local-runner": "^8.36.0",
-      "@wdio/mocha-framework": "^8.36.0",
-      "@wdio/spec-reporter": "^8.36.0",
-      "mochawesome-report-generator": "^6.2.0",
-      "ts-node": "^10.9.2",
-      "typescript": "^5.4.5"
+        "@wdio/appium-service": "^8.36.0",
+        "@wdio/cli": "^8.36.0",
+        "@wdio/json-reporter": "^8.36.0",
+        "@wdio/local-runner": "^8.36.0",
+        "@wdio/mocha-framework": "^8.36.0",
+        "@wdio/spec-reporter": "^8.36.0",
+        "mochawesome-report-generator": "^6.2.0",
+        "ts-node": "^10.9.2",
+        "typescript": "^5.4.5"
+    },
+    "dependencies": {
+        "package-lock.json": "^1.0.0"
     }
-  }
+}
