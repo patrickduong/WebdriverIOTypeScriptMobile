@@ -12,6 +12,7 @@
     "author": "",
     "license": "ISC",
     "devDependencies": {
+        "@wdio/allure-reporter": "^9.12.3",
         "@wdio/appium-service": "^8.36.0",
         "@wdio/cli": "^8.36.0",
         "@wdio/json-reporter": "^8.36.0",
@@ -23,6 +24,7 @@
         "typescript": "^5.4.5"
     },
     "dependencies": {
+        "allure-commandline": "^2.33.0",
         "package-lock.json": "^1.0.0"
     }
 }
