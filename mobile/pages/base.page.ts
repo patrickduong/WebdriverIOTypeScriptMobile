@@ -17,6 +17,10 @@ export default class BasePage {
     );
   }
 
+  async openUsingResourceID(resourceID: string) {
+    await $(`android=new UiSelector().resourceId("${resourceID}")`).click();
+  }
+
   async openUsingPackage(packageName: string) {
     await driver.startActivity(APP_PACKAGE, packageName);
   }
