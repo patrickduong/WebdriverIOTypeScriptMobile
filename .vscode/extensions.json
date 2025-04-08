@@ -1,0 +1,8 @@
+{
+    "recommendations": [
+        "akamud.vscode-theme-onedark",
+        "alexkrechik.cucumberautocomplete",
+        "pkief.material-icon-theme",
+        "ms-azuretools.vscode-docker"
+    ]
+}
