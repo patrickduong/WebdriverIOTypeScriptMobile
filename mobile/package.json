@@ -22,7 +22,7 @@
         "mochawesome-report-generator": "^6.2.0",
         "ts-node": "^10.9.2",
         "typescript": "^5.4.5",
-        "@wdio/allure-reporter": "^7.0.0",
+        "@wdio/allure-reporter": "^8.36.0",
         "allure-commandline": "^2.31.0"
     },
     "dependencies": {

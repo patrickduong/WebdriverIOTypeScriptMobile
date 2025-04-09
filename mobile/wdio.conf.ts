@@ -1,6 +1,6 @@
 import type { Options } from "@wdio/types";
-import { allure } from "allure-commandline";
 import { androidDeviceCapabilities } from "./config/capabilities";
+import { JSON_OUTPUT_DIR } from "./static/pathConstants";
 
 export const config: Options.Testrunner = {
   // =====================
@@ -44,29 +44,29 @@ export const config: Options.Testrunner = {
   // specFileRetries: 1,
   // specFileRetriesDelay: 0,
   reporters: [
-    [
-      "allure",
-      {
-        outputDir: "allure-results",
-        disableWebdriverStepsReporting: true,
-        disableWebdriverScreenshotsReporting: true,
-      },
-    ],
-    // ,
-    // "spec",
     // [
-    //   "json",
+    //   "allure",
     //   {
-    //     outputDir: JSON_OUTPUT_DIR,
-    //     outputFileFormat: (opts: any) => {
-    //       return `results-${opts.cid}.${opts.capabilities.platformName}.json`;
-    //     },
+    //     outputDir: "allure-results",
+    //     disableWebdriverStepsReporting: true,
+    //     disableWebdriverScreenshotsReporting: true,
     //   },
     // ],
+    // ,
+    "spec",
+    [
+      "json",
+      {
+        outputDir: JSON_OUTPUT_DIR,
+        outputFileFormat: (opts: any) => {
+          return `results-${opts.cid}.${opts.capabilities.platformName}.json`;
+        },
+      },
+    ],
   ],
   mochaOpts: {
     compilers: [],
-    ui: "tdd",
+    ui: "bdd",
     timeout: 60000,
   },
 
@@ -80,27 +80,27 @@ export const config: Options.Testrunner = {
     }
   },
 
-  onComplete: function () {
-    const reportError = new Error("Could not generate Allure report");
-    const generation = allure(["generate", "allure-results", "--clean"]);
-    return new Promise((resolve, reject) => {
-      const generationTimeout = setTimeout(() => reject(reportError), 5000);
+  // onComplete: function () {
+  //   const reportError = new Error("Could not generate Allure report");
+  //   const generation = allure(["generate", "allure-results", "--clean"]);
+  //   return new Promise<void>((resolve, reject) => {
+  //     const generationTimeout = setTimeout(() => reject(reportError), 5000);
 
-      generation.on("exit", function (exitCode) {
-        clearTimeout(generationTimeout);
+  //     generation.on("exit", function (exitCode) {
+  //       clearTimeout(generationTimeout);
 
-        if (exitCode !== 0) {
-          return reject(reportError);
-        }
+  //       if (exitCode !== 0) {
+  //         return reject(reportError);
+  //       }
 
-        console.log("Allure report successfully generated");
-        resolve();
-      });
-    });
-  },
-  // onComplete: function (exitCode, config, capabilities, results) {
-  //   const mergeResults = require("@wdio/json-reporter/mergeResults");
-  //   mergeResults(JSON_OUTPUT_DIR, "results-*");
+  //       console.log("Allure report successfully generated");
+  //       resolve();
+  //     });
+  //   });
   // },
-  // onReload: function (oldSessionId, newSessionId) {},
+  onComplete: function (exitCode, config, capabilities, results) {
+    const mergeResults = require("@wdio/json-reporter/mergeResults");
+    mergeResults(JSON_OUTPUT_DIR, "results-*");
+  },
+  onReload: function (oldSessionId, newSessionId) {},
 };
