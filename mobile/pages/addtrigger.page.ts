@@ -1,23 +1,5 @@
 import BasePage from "./base.page";
 class AddTriggerPage extends BasePage {
-  async selectOption(optionItem: string) {
-    await $(
-      `//android.widget.CheckedTextView[@resource-id="android:id/text1" and @text="${optionItem}"]`
-    ).click();
-  }
-
-  async selectCategory(categoryName: string) {
-    await $(
-      `//android.widget.TextView[@resource-id="com.arlosoft.macrodroid:id/category_name" and @text="${categoryName}"]`
-    ).click();
-  }
-
-  async selectItemName(itemName: string) {
-    await $(
-      `//android.widget.TextView[@resource-id="com.arlosoft.macrodroid:id/select_item_name" and @text="${itemName}"]`
-    ).click();
-  }
-
   async addTriggerType(
     typeTrigger: string,
     selecType: string,

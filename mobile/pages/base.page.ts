@@ -49,4 +49,22 @@ export default class BasePage {
   async openUsingPackage(packageName: string) {
     await driver.startActivity(APP_PACKAGE, packageName);
   }
+
+  async selectOption(optionItem: string) {
+    await $(
+      `//android.widget.CheckedTextView[@resource-id="android:id/text1" and @text="${optionItem}"]`
+    ).click();
+  }
+
+  async selectCategory(categoryName: string) {
+    await $(
+      `//android.widget.TextView[@resource-id="com.arlosoft.macrodroid:id/category_name" and @text="${categoryName}"]`
+    ).click();
+  }
+
+  async selectItemName(itemName: string) {
+    await $(
+      `//android.widget.TextView[@resource-id="com.arlosoft.macrodroid:id/select_item_name" and @text="${itemName}"]`
+    ).click();
+  }
 }
