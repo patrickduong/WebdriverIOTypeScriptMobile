@@ -33,6 +33,12 @@ class MarcroPage extends BasePage {
     await this.clickByResourceID("com.arlosoft.macrodroid:id/localVarsLabel");
   }
 
+  async clickAddANewLocalVariableButton() {
+    await this.clickByResourceID(
+      "com.arlosoft.macrodroid:id/addVariableButton"
+    );
+  }
+
   async isMarcroEntryNameDisplayed(expectedMacroEntryName: string) {
     await $(
       `//android.widget.TextView[@resource-id="com.arlosoft.macrodroid:id/macro_edit_entry_name" and @text="${expectedMacroEntryName}"]`
