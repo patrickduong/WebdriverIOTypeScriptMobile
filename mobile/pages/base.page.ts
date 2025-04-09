@@ -26,13 +26,24 @@ export default class BasePage {
   }
 
   async clickByText(text: string) {
-    (await $(`android=new UiSelector().text("${text}")`)).click();
+    await $(`android=new UiSelector().text("${text}")`).click();
   }
 
   async getTextValueWithResourceID(resourceID: string, attributeType: string) {
-    (
-      await $(`android=new UiSelector().resourceId("${resourceID}")`)
-    ).getAttribute(`"${resourceID}"`);
+    await $(
+      `android=new UiSelector().resourceId("${resourceID}")`
+    ).getAttribute(`"${attributeType}"`);
+  }
+
+  async confirmSelectOption(confirm: String) {
+    if (confirm == "OK")
+      await $(
+        `android=new UiSelector().resourceId("android:id/button1")`
+      ).click();
+    else
+      await $(
+        `android=new UiSelector().resourceId("android:id/button2")`
+      ).click();
   }
 
   async openUsingPackage(packageName: string) {

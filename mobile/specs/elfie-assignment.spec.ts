@@ -6,7 +6,7 @@ import macroPage from "../pages/macro.page";
 describe("Verify that the user is able to add a macro", () => {
   allureReporter.addFeature("Add marcro");
   it("should able to add marco type trigger", async () => {
-    allureReporter.addTestId("Add marcro type trigger");
+    // allureReporter.addTestId("Add marcro type trigger");
     await commonPage.clickSkipButton();
     await commonPage.clickByDescription("Navigate up");
     await commonPage.openMacros();
@@ -19,6 +19,9 @@ describe("Verify that the user is able to add a macro", () => {
       "Any Application"
     );
 
-    await expect(commonPage.appNameHeader).toHaveText("Application Removed");
+    await expect(macroPage.isMarcroEntryNameDisplayed("Application Removed"))
+      .toBeTruthy;
+    await expect(macroPage.isMarcroEntryDetailDisplayed("Any Application"))
+      .toBeTruthy;
   });
 });

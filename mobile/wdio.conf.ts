@@ -66,7 +66,7 @@ export const config: Options.Testrunner = {
   ],
   mochaOpts: {
     compilers: [],
-    ui: "bdd",
+    ui: "tdd",
     timeout: 60000,
   },
 
@@ -83,10 +83,10 @@ export const config: Options.Testrunner = {
   onComplete: function () {
     const reportError = new Error("Could not generate Allure report");
     const generation = allure(["generate", "allure-results", "--clean"]);
-    return new Promise<void>((resolve, reject) => {
+    return new Promise((resolve, reject) => {
       const generationTimeout = setTimeout(() => reject(reportError), 5000);
 
-      generation.on("exit", function (exitCode: number) {
+      generation.on("exit", function (exitCode) {
         clearTimeout(generationTimeout);
 
         if (exitCode !== 0) {
@@ -102,6 +102,5 @@ export const config: Options.Testrunner = {
   //   const mergeResults = require("@wdio/json-reporter/mergeResults");
   //   mergeResults(JSON_OUTPUT_DIR, "results-*");
   // },
-  //onReload: function(oldSessionId, newSessionId) {
-  //}
+  // onReload: function (oldSessionId, newSessionId) {},
 };
