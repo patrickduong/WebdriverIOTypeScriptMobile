@@ -1,26 +1,24 @@
 import BasePage from "./base.page";
 
-class PageElements extends BasePage {
+class Common extends BasePage {
   get appNameHeader() {
     return $("android.widget.TextView");
   }
 
   async clickSkipButton() {
-    await this.openUsingResourceID("com.arlosoft.macrodroid:id/button_skip");
+    await this.clickByResourceID("com.arlosoft.macrodroid:id/button_skip");
   }
 
   async clickNextButton() {
-    await this.openUsingResourceID("com.arlosoft.macrodroid:id/button_next");
+    await this.clickByResourceID("com.arlosoft.macrodroid:id/button_next");
   }
 
   async openHome() {
-    await this.openUsingResourceID(
-      "com.arlosoft.macrodroid:id/navigation_home"
-    );
+    await this.clickByResourceID("com.arlosoft.macrodroid:id/navigation_home");
   }
 
   async openMacros() {
-    await this.openUsingResourceID(
+    await this.clickByResourceID(
       "com.arlosoft.macrodroid:id/navigation_macro_list"
     );
   }
@@ -29,4 +27,4 @@ class PageElements extends BasePage {
     await this.scrollHorizontally();
   }
 }
-export default new PageElements();
+export default new Common();

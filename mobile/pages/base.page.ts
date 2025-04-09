@@ -1,7 +1,7 @@
 import { APP_PACKAGE } from "../static/constants";
 
 export default class BasePage {
-  findByTextContains(partialText: string) {
+  async findByTextContains(partialText: string) {
     return $(`android=new UiSelector().textContains("${partialText}")`);
   }
 
@@ -17,8 +17,22 @@ export default class BasePage {
     );
   }
 
-  async openUsingResourceID(resourceID: string) {
+  async clickByResourceID(resourceID: string) {
     await $(`android=new UiSelector().resourceId("${resourceID}")`).click();
+  }
+
+  async clickByDescription(desciption: string) {
+    await $(`android=new UiSelector().description("${desciption}")`).click();
+  }
+
+  async clickByText(text: string) {
+    (await $(`android=new UiSelector().text("${text}")`)).click();
+  }
+
+  async getTextValueWithResourceID(resourceID: string, attributeType: string) {
+    (
+      await $(`android=new UiSelector().resourceId("${resourceID}")`)
+    ).getAttribute(`"${resourceID}"`);
   }
 
   async openUsingPackage(packageName: string) {

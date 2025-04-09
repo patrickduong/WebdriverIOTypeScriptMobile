@@ -1,6 +1,6 @@
 # WebdriverIOTypeScriptMobile
 
-Clone and update from https://github.com/sadabnepal/web-mobile-api-test-framework/
+reference from: https://github.com/sadabnepal/web-mobile-api-test-framework/
 
 Install Appium Server
 
@@ -34,8 +34,7 @@ Setup/Create virtual device on Android studio:
 
 Device Configurations:
 
-Device 1: Pixel 3 - version 11
-Device 2: Nexus 6 - version 10 [ if you want to run tests in parallel ]
+see the wdio.conf.parallel.ts and config/capabilities.ts
 
 Verify all setup
 

@@ -1,8 +1,24 @@
-import elementsPage from "../pages/element.page";
-import * as constants from "../static/constants";
+import allureReporter from "@wdio/allure-reporter";
+import addtriggerPage from "../pages/addtrigger.page";
+import commonPage from "../pages/common.page";
+import macroPage from "../pages/macro.page";
 
-describe("elfie tests", () => {
-  it("should validate app name", async () => {
-    await expect(elementsPage.appNameHeader).toHaveText(constants.APP_HEADER);
+describe("Verify that the user is able to add a macro", () => {
+  allureReporter.addFeature("Add marcro");
+  it("should able to add marco type trigger", async () => {
+    allureReporter.addTestId("Add marcro type trigger");
+    await commonPage.clickSkipButton();
+    await commonPage.clickByDescription("Navigate up");
+    await commonPage.openMacros();
+    await macroPage.clickAddMarcoButton();
+    await macroPage.clickAddTriggerButton();
+    await addtriggerPage.addTriggerType(
+      "Applications",
+      "App Install/Remove/Update",
+      "Application Removed",
+      "Any Application"
+    );
+
+    await expect(commonPage.appNameHeader).toHaveText("Application Removed");
   });
 });
