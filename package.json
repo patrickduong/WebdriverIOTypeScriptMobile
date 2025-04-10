@@ -19,10 +19,12 @@
     "author": "patrickduong",
     "license": "ISC",
     "dependencies": {
-        "enquirer": "^2.3.6"
+        "enquirer": "^2.3.6",
+        "package-lock.json": "^1.0.0"
     },
     "devDependencies": {
         "appium": "^2.17.1",
+        "appium-uiautomator2-driver": "^4.1.5",
         "npm-check-updates": "^16.14.18"
     }
 }

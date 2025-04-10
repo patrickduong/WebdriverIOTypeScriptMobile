@@ -2,3 +2,5 @@ mobile/node_modules/
 mobile/reports/
 node_modules/
 .DS_Store
+mobile/allure-results
+mobile/allure-report
