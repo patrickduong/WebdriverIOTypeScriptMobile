@@ -60,7 +60,7 @@ describe("Verify that the user is able to add a macro", () => {
     await expect(macroPage.isMarcroEntryNameDisplayed("Test Case")).toBeTruthy;
 
     await macroPage.clickByText("Test Case");
-    await addlocalvariablePage.updateVariableValue(["Test Case"], [1]);
+    await addlocalvariablePage.updateVariableValue(["Test Case"], 1);
     await expect(macroPage.isMarcroEntryDetailDisplayed("1")).toBeTruthy;
   });
 });

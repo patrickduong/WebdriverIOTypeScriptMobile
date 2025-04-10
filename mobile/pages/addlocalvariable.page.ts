@@ -17,13 +17,13 @@ class AddLocalVariablePage extends BasePage {
     await this.clickByText(variableType);
   }
 
-  async updateVariableValue(variabbleName: string[], variableValue: any) {
+  async updateVariableValue(variabbleName: string[], variableValue: number) {
     await $(
       `//android.widget.EditText[@resource-id="com.arlosoft.macrodroid:id/variable_name" and @text="${variabbleName}"]`
     ).click();
     await $(
       `//android.widget.EditText[@resource-id="com.arlosoft.macrodroid:id/enter_variable_dialog_value"]`
-    ).sendKeys(variableValue);
+    ).pressKeyCode(variableValue);
     await this.clickByText("OK");
   }
 
