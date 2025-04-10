@@ -38,18 +38,6 @@ class MarcroPage extends BasePage {
       "com.arlosoft.macrodroid:id/addVariableButton"
     );
   }
-
-  async isMarcroEntryNameDisplayed(expectedMacroEntryName: string) {
-    await $(
-      `//android.widget.TextView[@resource-id="com.arlosoft.macrodroid:id/macro_edit_entry_name" and @text="${expectedMacroEntryName}"]`
-    ).isDisplayed();
-  }
-
-  async isMarcroEntryDetailDisplayed(expectedMacroEntryDetail: string) {
-    await $(
-      `//android.widget.TextView[@resource-id="com.arlosoft.macrodroid:id/macro_edit_entry_detail" and @text="${expectedMacroEntryDetail}"]`
-    ).isDisplayed();
-  }
 }
 
 export default new MarcroPage();

@@ -1,6 +1,28 @@
 import { APP_PACKAGE } from "../static/constants";
 
 export default class BasePage {
+  async clickSkipButton() {
+    await this.clickByResourceID("com.arlosoft.macrodroid:id/button_skip");
+  }
+
+  async clickNextButton() {
+    await this.clickByResourceID("com.arlosoft.macrodroid:id/button_next");
+  }
+
+  async clickBackButton() {
+    await this.clickByResourceID("com.arlosoft.macrodroid:id/actionBack");
+  }
+
+  async openHome() {
+    await this.clickByResourceID("com.arlosoft.macrodroid:id/navigation_home");
+  }
+
+  async openMacros() {
+    await this.clickByResourceID(
+      "com.arlosoft.macrodroid:id/navigation_macro_list"
+    );
+  }
+
   async findByTextContains(partialText: string) {
     return $(`android=new UiSelector().textContains("${partialText}")`);
   }
@@ -66,5 +88,21 @@ export default class BasePage {
     await $(
       `//android.widget.TextView[@resource-id="com.arlosoft.macrodroid:id/select_item_name" and @text="${itemName}"]`
     ).click();
+  }
+
+  async isMarcroEntryNameDisplayed(expectedMacroEntryName: string) {
+    await $(
+      `//android.widget.TextView[@resource-id="com.arlosoft.macrodroid:id/macro_edit_entry_name" and @text="${expectedMacroEntryName}"]`
+    ).isDisplayed();
+  }
+
+  async isMarcroEntryDetailDisplayed(expectedMacroEntryDetail: string) {
+    await $(
+      `//android.widget.TextView[@resource-id="com.arlosoft.macrodroid:id/macro_edit_entry_detail" and @text="${expectedMacroEntryDetail}"]`
+    ).isDisplayed();
+  }
+
+  async clickAcceptButton() {
+    await this.clickByResourceID("com.arlosoft.macrodroid:id/acceptButton");
   }
 }

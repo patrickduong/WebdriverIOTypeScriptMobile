@@ -11,19 +11,46 @@ class AddLocalVariablePage extends BasePage {
       `android=new UiSelector().resourceId("com.arlosoft.macrodroid:id/variable_new_variable_type_spinner")`
     ).click();
 
-    // await $(
-    //   `//android.widget.CheckedTextView[@resource-id="android:id/text1" and @text="${variableType}"]`
-    // ).click();
     await this.clickByText(variableType);
   }
 
-  async updateVariableValue(variabbleName: string[], variableValue: number) {
+  async updateVariableValue(
+    variableName: string,
+    variableType: string,
+    variableValue: any
+  ) {
     await $(
-      `//android.widget.EditText[@resource-id="com.arlosoft.macrodroid:id/variable_name" and @text="${variabbleName}"]`
+      `//android.widget.TextView[@resource-id="com.arlosoft.macrodroid:id/macro_edit_entry_name" and @text="${variableName}"]`
     ).click();
-    await $(
-      `//android.widget.EditText[@resource-id="com.arlosoft.macrodroid:id/enter_variable_dialog_value"]`
-    ).pressKeyCode(variableValue);
+    switch (variableType) {
+      case "String":
+        await $(
+          `//android.widget.EditText[@resource-id="com.arlosoft.macrodroid:id/enter_variable_dialog_value"]`
+        ).sendKeys(variableValue);
+        break;
+      case "Integer":
+        await $(
+          `//android.widget.EditText[@resource-id="com.arlosoft.macrodroid:id/enter_variable_dialog_value"]`
+        ).clearValue();
+        await $(
+          `//android.widget.EditText[@resource-id="com.arlosoft.macrodroid:id/enter_variable_dialog_value"]`
+        ).pressKeyCode(variableValue);
+        break;
+      case "Decimal":
+        await $(
+          `//android.widget.EditText[@resource-id="com.arlosoft.macrodroid:id/enter_variable_dialog_value"]`
+        ).pressKeyCode(variableValue);
+        break;
+      case "Boolean":
+        await $(
+          `//android.widget.RadioButton[@resource-id="com.arlosoft.macrodroid:id/${variableValue}Radio"]`
+        ).click();
+        break;
+      //handle more cases here
+      default:
+        throw new Error("Other variable type not support");
+    }
+
     await this.clickByText("OK");
   }
 
@@ -31,7 +58,6 @@ class AddLocalVariablePage extends BasePage {
     await this.enterVariableName(variableName);
     await this.selectVariableType(variableType);
     await this.clickByText("OK");
-    // await this.confirmSelectOption("OK");
   }
 }
 
