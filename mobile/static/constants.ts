@@ -1,5 +1,9 @@
 export const APP_PACKAGE = "com.arlosoft.macrodroid";
 export const APP_HEADER = "MACRODROID";
-export const COMMAND_TWO_POPUP_MSG = "You selected: 1 , Command two";
-export const MENU_ITEMS = ["Home", "Macros", "Templates", "Settings"];
-export const TEST_STRING = `This is a testing string`;
+
+export enum CUSTOM_WAIT {
+  QUICK_WAIT = 2500,
+  MEDIUM_WAIT = 10000,
+  SLOW_WAIT = 15000,
+  VERY_SLOW_WAIT = 20000,
+}

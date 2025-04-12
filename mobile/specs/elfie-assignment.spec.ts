@@ -1,3 +1,4 @@
+import { DateTimeDataHelper } from "../../utils/datetime-data-helper";
 import {
   ActionType,
   ContraintType,
@@ -11,8 +12,10 @@ import addlocalvariablePage from "../pages/addlocalvariable.page";
 import addtriggerPage from "../pages/addtrigger.page";
 import commonPage from "../pages/common.page";
 import macroPage from "../pages/macro.page";
+import { CUSTOM_WAIT } from "../static/constants";
 
 describe("Marcodroid features test", () => {
+  const generateTestDate = new DateTimeDataHelper();
   before("Go to macro page", async () => {
     await commonPage.clickSkipButton();
     await commonPage.clickByDescription("Navigate up");
@@ -118,8 +121,9 @@ describe("Marcodroid features test", () => {
   context(
     "TC 2: Verify that the user is able to add an action blocks (add 3 action blocks)",
     () => {
+      const todayDate = generateTestDate.getFormattedDateWithOffset("days", 0);
       it("should able to create a new block action", async () => {
-        const testBlockActionName = "Test Action Block Name";
+        const testBlockActionName = `Test Action Block Name ${todayDate}`;
         const testBlockActionDesc = "Test Action Block Description";
 
         await commonPage.clickBackButton();
@@ -199,6 +203,7 @@ describe("Marcodroid features test", () => {
     () => {
       it("should able to create a new block action", async () => {
         await commonPage.clickByDescription("Navigate up");
+        await commonPage.handleSkipAdVideo(CUSTOM_WAIT.VERY_SLOW_WAIT);
         await commonPage.openHome();
         await commonPage.clickByText("Add Macro Wizard");
         // focus on selected tab

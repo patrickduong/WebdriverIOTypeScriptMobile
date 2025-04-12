@@ -114,6 +114,19 @@ export default class BasePage {
     ).isDisplayed();
   }
 
+  async handleSkipAdVideo(waitTime: number) {
+    //temporary handle wait time with hard code - need cover the case ad show up with other type
+    //need to know send key with back key press on soft keyboard after wait
+    await driver.pause(waitTime);
+
+    await $(
+      `//android.view.View[@resource-id="mys-content"]/android.view.View[2]`
+    ).click();
+    await $(
+      `//android.view.View[@resource-id="mys-content"]/android.view.View[2]`
+    ).click();
+  }
+
   async clickAcceptButton() {
     await this.clickByResourceID("com.arlosoft.macrodroid:id/acceptButton");
   }
