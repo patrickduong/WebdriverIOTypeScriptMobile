@@ -1,4 +1,4 @@
-import BasePage from "./base.page";
+import BasePage from "../base.page";
 class AddActionPage extends BasePage {
   async addActionType(typeAction: string, selecType: string, option: string) {
     await this.selectCategory(typeAction);

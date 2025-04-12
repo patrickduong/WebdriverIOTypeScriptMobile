@@ -130,4 +130,10 @@ export default class BasePage {
   async clickAcceptButton() {
     await this.clickByResourceID("com.arlosoft.macrodroid:id/acceptButton");
   }
+
+  async clickImageButton(contentDesc: string) {
+    await $(
+      `//android.widget.ImageButton[@content-desc="${contentDesc}"]`
+    ).click();
+  }
 }

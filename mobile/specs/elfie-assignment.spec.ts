@@ -5,13 +5,13 @@ import {
   LocalVariableType,
   TriggerType,
 } from "../dataobject/macro.types";
-import actionblockPage from "../pages/actionblock.page";
-import addactionPage from "../pages/addaction.page";
-import addcontraintPage from "../pages/addcontraint.page";
-import addlocalvariablePage from "../pages/addlocalvariable.page";
-import addtriggerPage from "../pages/addtrigger.page";
 import commonPage from "../pages/common.page";
-import macroPage from "../pages/macro.page";
+import actionblockPage from "../pages/Home/actionblock.page";
+import addactionPage from "../pages/Macro/addaction.page";
+import addcontraintPage from "../pages/Macro/addcontraint.page";
+import addlocalvariablePage from "../pages/Macro/addlocalvariable.page";
+import addtriggerPage from "../pages/Macro/addtrigger.page";
+import macroPage from "../pages/Macro/macro.page";
 import { CUSTOM_WAIT } from "../static/constants";
 
 describe("Marcodroid features test", () => {

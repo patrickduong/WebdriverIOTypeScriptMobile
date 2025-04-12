@@ -1,6 +1,6 @@
-import addactionPage from "./addaction.page";
-import addlocalvariablePage from "./addlocalvariable.page";
-import BasePage from "./base.page";
+import BasePage from "../base.page";
+import addactionPage from "../Macro/addaction.page";
+import addlocalvariablePage from "../Macro/addlocalvariable.page";
 class AddActionBlockPage extends BasePage {
   async clickAddAcctionBlockPlusIcon() {
     await $(
