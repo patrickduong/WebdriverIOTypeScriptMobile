@@ -38,6 +38,35 @@ class MarcroPage extends BasePage {
       "com.arlosoft.macrodroid:id/addVariableButton"
     );
   }
-}
 
+  async isMarcroCategoryDisplayed(expectedCategoryName: string) {
+    await $(
+      `android.widget.TextView[@resource-id="com.arlosoft.macrodroid:id/group_title" and @Text="${expectedCategoryName}"]`
+    ).isDisplayed();
+  }
+
+  async isMarcroNameDisplayed(expectedMarcoName: string) {
+    await $(
+      `//android.widget.TextView[@resource-id="com.arlosoft.macrodroid:id/macroNameText" and @Text="${expectedMarcoName}"]`
+    ).isDisplayed();
+  }
+
+  async isMarcroTriggerDisplayed(expectedTriggerName: string) {
+    await $(
+      `//android.widget.TextView[@resource-id="com.arlosoft.macrodroid:id/macroTrigger" and @Text="${expectedTriggerName}"]`
+    ).isDisplayed();
+  }
+
+  async isMarcroActionDisplayed(expectedActionName: string) {
+    await $(
+      `//android.widget.TextView[@resource-id="com.arlosoft.macrodroid:id/macroActions" and @Text="${expectedActionName}"]`
+    ).isDisplayed();
+  }
+
+  async isMarcroConstraintDisplayed(expectedConstraintName: string) {
+    await $(
+      `//android.widget.TextView[@resource-id="com.arlosoft.macrodroid:id/macroConstraints" and @Text="${expectedConstraintName}"]`
+    ).isDisplayed();
+  }
+}
 export default new MarcroPage();

@@ -7,6 +7,7 @@ import {
 } from "../dataobject/macro.types";
 import commonPage from "../pages/common.page";
 import actionblockPage from "../pages/Home/actionblock.page";
+import addmacrowizardPage from "../pages/Home/addmacrowizard.page";
 import addactionPage from "../pages/Macro/addaction.page";
 import addcontraintPage from "../pages/Macro/addcontraint.page";
 import addlocalvariablePage from "../pages/Macro/addlocalvariable.page";
@@ -191,23 +192,93 @@ describe("Marcodroid features test", () => {
 
         await actionblockPage.clickAcceptButton();
 
-        await actionblockPage.isItemNameDisplayed(testBlockActionName);
-        await actionblockPage.isItemDescDisplayed(testBlockActionDesc);
-
-        // need add expect for blockName and BlockDescription
+        await expect(actionblockPage.isItemNameDisplayed(testBlockActionName))
+          .toBeTruthy;
+        await expect(actionblockPage.isItemDescDisplayed(testBlockActionDesc))
+          .toBeTruthy;
       });
     }
   );
   context(
     "TC 3: Verify that the user is able to add a macro from Home - Add Macro Wizard",
     () => {
-      it("should able to create a new block action", async () => {
+      it("should able to create a new marcro with group name - trigger - action - constraint", async () => {
+        const todayDate = generateTestDate.getFormattedDateWithOffset(
+          "days",
+          0
+        );
+        const testMacroName = [`Test Marco - ${todayDate}`];
+        const testMarroGroup = "Games";
+
+        const TestMarcoWizardTriggerData: TriggerType = {
+          typeTrigger: "Applications",
+          selecType: "App Install/Remove/Update",
+          option: "Application Installed",
+          subOption: "Any Application",
+        };
+
+        const TestMacroWizardActionData: ActionType = {
+          typeAction: "Logging",
+          selecType: "Clear Log",
+          option: "User Log",
+        };
+
+        const TestMacroWizardContraintData: ContraintType = {
+          typeAction: "Device State",
+          selecType: "Airplane Mode",
+          option: "Airplane Mode Enabled",
+        };
+
         await commonPage.clickByDescription("Navigate up");
         await commonPage.handleSkipAdVideo(CUSTOM_WAIT.VERY_SLOW_WAIT);
         await commonPage.openHome();
         await commonPage.clickByText("Add Macro Wizard");
-        // focus on selected tab
-        // reuse action on trigger, Actions, Contraints
+
+        await addmacrowizardPage.addMacroTypeFull(
+          TestMarcoWizardTriggerData,
+          TestMacroWizardActionData,
+          TestMacroWizardContraintData
+        );
+
+        await expect(addmacrowizardPage.isMarcroItemTypeCreated("trigger"))
+          .toBeTruthy;
+        await expect(addmacrowizardPage.isMarcroItemTypeCreated("action"))
+          .toBeTruthy;
+        await expect(addmacrowizardPage.isMarcroItemTypeCreated("constraint"))
+          .toBeTruthy;
+
+        await addmacrowizardPage.addMarcoNameWithCategory(
+          testMacroName,
+          testMarroGroup
+        );
+
+        // await commonPage.handleSkipAdVideo(CUSTOM_WAIT.SLOW_WAIT); - happen random
+        await commonPage.openMacros();
+
+        await expect(
+          macroPage.isMarcroCategoryDisplayed(`${testMarroGroup} (1)`)
+        ).toBeTruthy;
+
+        await expect(macroPage.isMarcroNameDisplayed(`${testMacroName[0]}`))
+          .toBeTruthy;
+
+        await expect(
+          macroPage.isMarcroTriggerDisplayed(
+            `${TestMarcoWizardTriggerData.option} (${TestMarcoWizardTriggerData.subOption})`
+          )
+        ).toBeTruthy;
+
+        await expect(
+          macroPage.isMarcroActionDisplayed(
+            `${TestMacroWizardActionData.selecType}`
+          )
+        ).toBeTruthy;
+
+        await expect(
+          macroPage.isMarcroConstraintDisplayed(
+            `${TestMacroWizardContraintData.option}`
+          )
+        ).toBeTruthy;
       });
     }
   );
