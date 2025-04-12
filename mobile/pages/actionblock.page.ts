@@ -51,18 +51,18 @@ class AddActionBlockPage extends BasePage {
   }
 
   async addAcctionBlockVariable(
-    vaType: string,
+    variableType: string,
     variableName: string[],
-    variableType: string
+    variableSubType: string
   ) {
-    if (vaType == "input") {
+    if (variableType == "input") {
       await this.clickExpandInputVariableButton(); //handle for expand to see Input variable
       await this.clickAddInputVariableButton();
-      await addlocalvariablePage.addNewVariable(variableName, variableType);
-    } else if (vaType == "output") {
+      await addlocalvariablePage.addNewVariable(variableName, variableSubType);
+    } else if (variableType == "output") {
       await this.clickExpandOutputVariableButton(); //handle for expand to see Output variable
       await this.clickAddOutputVariableButton();
-      await addlocalvariablePage.addNewVariable(variableName, variableType);
+      await addlocalvariablePage.addNewVariable(variableName, variableSubType);
     }
   }
 
@@ -87,6 +87,18 @@ class AddActionBlockPage extends BasePage {
       variableType,
       variableValue
     );
+  }
+
+  async isActionBlockNameDisplayed(expectedActionBlockName: string) {
+    await $(
+      `//android.widget.EditText[@resource-id="com.arlosoft.macrodroid:id/actionBlockNameText" and @text="${expectedActionBlockName}"]`
+    ).isDisplayed();
+  }
+
+  async isActionBlockDescDisplayed(expectedActionBlockDesc: string) {
+    await $(
+      `//android.widget.EditText[@resource-id="com.arlosoft.macrodroid:id/description" and @text="${expectedActionBlockDesc}"]`
+    ).isDisplayed();
   }
 }
 

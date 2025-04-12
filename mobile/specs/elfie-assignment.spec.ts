@@ -1,3 +1,9 @@
+import {
+  ActionType,
+  ContraintType,
+  LocalVariableType,
+  TriggerType,
+} from "../dataobject/macro.types";
 import actionblockPage from "../pages/actionblock.page";
 import addactionPage from "../pages/addaction.page";
 import addcontraintPage from "../pages/addcontraint.page";
@@ -17,60 +23,95 @@ describe("Marcodroid features test", () => {
     "TC 1: Verify that the user is able to add a macro (dont need to add macro name) (add 3 macros)",
     () => {
       it("should able to add marco type trigger", async () => {
+        const TestMarcoTriggerData: TriggerType = {
+          typeTrigger: "Applications",
+          selecType: "App Install/Remove/Update",
+          option: "Application Removed",
+          subOption: "Any Application",
+        };
+
         await macroPage.clickAddTriggerButton();
         await addtriggerPage.addTriggerType(
-          "Applications",
-          "App Install/Remove/Update",
-          "Application Removed",
-          "Any Application"
+          TestMarcoTriggerData.typeTrigger,
+          TestMarcoTriggerData.selecType,
+          TestMarcoTriggerData.option,
+          TestMarcoTriggerData.subOption
         );
 
         await expect(
-          macroPage.isMarcroEntryNameDisplayed("Application Removed")
+          macroPage.isEntryNameDisplayed(TestMarcoTriggerData.option)
         ).toBeTruthy;
-        await expect(macroPage.isMarcroEntryDetailDisplayed("Any Application"))
-          .toBeTruthy;
+        await expect(
+          macroPage.isEntryDetailDisplayed(TestMarcoTriggerData.subOption)
+        ).toBeTruthy;
       });
 
       it("should able to add marco type Action", async () => {
+        const TestMacroActionData: ActionType = {
+          typeAction: "Logging",
+          selecType: "Clear Log",
+          option: "System Log",
+        };
         await macroPage.clickAddActionButton();
-        await addactionPage.addActionType("Logging", "Clear Log", "System Log");
-
-        await expect(macroPage.isMarcroEntryNameDisplayed("Clear Log"))
-          .toBeTruthy;
-        await expect(macroPage.isMarcroEntryDetailDisplayed("System Log"))
-          .toBeTruthy;
-      });
-
-      it("should able to add marco type Contraint", async () => {
-        await macroPage.clickAddConstraintsButton();
-        await addcontraintPage.addContraintType(
-          "Device State",
-          "Airplane Mode",
-          "Airplane Mode Disabled"
+        await addactionPage.addActionType(
+          TestMacroActionData.typeAction,
+          TestMacroActionData.selecType,
+          TestMacroActionData.option
         );
 
         await expect(
-          macroPage.isMarcroEntryNameDisplayed("Airplane Mode Disabled")
+          macroPage.isEntryNameDisplayed(TestMacroActionData.selecType)
         ).toBeTruthy;
         await expect(
-          macroPage.isMarcroEntryDetailDisplayed("Airplane Mode Disabled")
+          macroPage.isEntryDetailDisplayed(TestMacroActionData.option)
+        ).toBeTruthy;
+      });
+
+      it("should able to add marco type Contraint", async () => {
+        const TestMacroContraintData: ContraintType = {
+          typeAction: "Device State",
+          selecType: "Airplane Mode",
+          option: "Airplane Mode Disabled",
+        };
+        await macroPage.clickAddConstraintsButton();
+        await addcontraintPage.addContraintType(
+          TestMacroContraintData.typeAction,
+          TestMacroContraintData.selecType,
+          TestMacroContraintData.option
+        );
+
+        await expect(
+          macroPage.isEntryNameDisplayed(TestMacroContraintData.option)
+        ).toBeTruthy;
+        await expect(
+          macroPage.isEntryDetailDisplayed(TestMacroContraintData.option)
         ).toBeTruthy;
       });
 
       it("should able to add marco type Variable", async () => {
+        const TestMacroLocalVariableData: LocalVariableType = {
+          variableName: ["Test Case"],
+          variableType: "Integer",
+          variableValue: 8,
+        };
         await macroPage.clickAddLocalVariableButton();
         await macroPage.clickAddANewLocalVariableButton();
-        await addlocalvariablePage.addNewVariable(["Test Case"], "Integer");
+        await addlocalvariablePage.addNewVariable(
+          TestMacroLocalVariableData.variableName,
+          TestMacroLocalVariableData.variableType
+        );
 
-        await expect(macroPage.isMarcroEntryNameDisplayed("Test Case"))
-          .toBeTruthy;
+        await expect(
+          macroPage.isEntryNameDisplayed(
+            TestMacroLocalVariableData.variableName[0]
+          )
+        ).toBeTruthy;
         await addlocalvariablePage.updateVariableValue(
-          "Test Case",
-          "Integer",
-          8
+          TestMacroLocalVariableData.variableName[0],
+          TestMacroLocalVariableData.variableType,
+          TestMacroLocalVariableData.variableValue
         ); //keycode 8 = 1 https://developer.android.com/reference/android/view/KeyEvent#KEYCODE_1
-        await expect(macroPage.isMarcroEntryDetailDisplayed("1")).toBeTruthy;
+        await expect(macroPage.isEntryDetailDisplayed("1")).toBeTruthy;
       });
     }
   );
@@ -78,16 +119,21 @@ describe("Marcodroid features test", () => {
     "TC 2: Verify that the user is able to add an action blocks (add 3 action blocks)",
     () => {
       it("should able to create a new block action", async () => {
+        const testBlockActionName = "Test Action Block Name";
+        const testBlockActionDesc = "Test Action Block Description";
+
         await commonPage.clickBackButton();
         await commonPage.clickByText("DISCARD");
         await commonPage.openHome();
         await commonPage.clickByText("Action Blocks");
         await actionblockPage.clickAddAcctionBlockPlusIcon();
 
-        await actionblockPage.enterActionBlockName(["Test Action Block Name"]);
+        await actionblockPage.enterActionBlockName([testBlockActionName]);
+        await actionblockPage.isActionBlockNameDisplayed(testBlockActionName);
         await actionblockPage.enterActionBlockDescription([
-          "Test Action Block Description",
+          testBlockActionDesc,
         ]);
+        await actionblockPage.isActionBlockDescDisplayed(testBlockActionDesc);
 
         // need add expect for blockName and BlockDescription
         await actionblockPage.addAcctionBlockVariable(
@@ -102,16 +148,20 @@ describe("Marcodroid features test", () => {
           "true"
         );
 
-        // need add expect for input value
+        await expect(
+          actionblockPage.isEntryNameDisplayed("Input Variable Boolean")
+        ).toBeTruthy;
+        await expect(actionblockPage.isEntryDetailDisplayed("Default: True"))
+          .toBeTruthy;
 
         await actionblockPage.addAActionType(
           "Logging",
           "Clear Log",
           "System Log"
         );
-        await expect(macroPage.isMarcroEntryNameDisplayed("Clear Log"))
+        await expect(actionblockPage.isEntryNameDisplayed("Clear Log"))
           .toBeTruthy;
-        await expect(macroPage.isMarcroEntryDetailDisplayed("System Log"))
+        await expect(actionblockPage.isEntryDetailDisplayed("System Log"))
           .toBeTruthy;
 
         await actionblockPage.addAcctionBlockVariable(
@@ -126,11 +176,33 @@ describe("Marcodroid features test", () => {
           ["This is a testing string"]
         );
 
-        // need add expect for output value
+        await expect(
+          actionblockPage.isEntryNameDisplayed("Output Variable String")
+        ).toBeTruthy;
+        await expect(
+          actionblockPage.isEntryDetailDisplayed(
+            "Default: This is a testing string"
+          )
+        ).toBeTruthy;
 
         await actionblockPage.clickAcceptButton();
 
+        await actionblockPage.isItemNameDisplayed(testBlockActionName);
+        await actionblockPage.isItemDescDisplayed(testBlockActionDesc);
+
         // need add expect for blockName and BlockDescription
+      });
+    }
+  );
+  context(
+    "TC 3: Verify that the user is able to add a macro from Home - Add Macro Wizard",
+    () => {
+      it("should able to create a new block action", async () => {
+        await commonPage.clickByDescription("Navigate up");
+        await commonPage.openHome();
+        await commonPage.clickByText("Add Macro Wizard");
+        // focus on selected tab
+        // reuse action on trigger, Actions, Contraints
       });
     }
   );

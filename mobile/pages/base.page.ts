@@ -90,15 +90,27 @@ export default class BasePage {
     ).click();
   }
 
-  async isMarcroEntryNameDisplayed(expectedMacroEntryName: string) {
+  async isEntryNameDisplayed(expectedEntryName: string) {
     await $(
-      `//android.widget.TextView[@resource-id="com.arlosoft.macrodroid:id/macro_edit_entry_name" and @text="${expectedMacroEntryName}"]`
+      `//android.widget.TextView[@resource-id="com.arlosoft.macrodroid:id/macro_edit_entry_name" and @text="${expectedEntryName}"]`
     ).isDisplayed();
   }
 
-  async isMarcroEntryDetailDisplayed(expectedMacroEntryDetail: string) {
+  async isEntryDetailDisplayed(expectedEntryDetail: string) {
     await $(
-      `//android.widget.TextView[@resource-id="com.arlosoft.macrodroid:id/macro_edit_entry_detail" and @text="${expectedMacroEntryDetail}"]`
+      `//android.widget.TextView[@resource-id="com.arlosoft.macrodroid:id/macro_edit_entry_detail" and @text="${expectedEntryDetail}"]`
+    ).isDisplayed();
+  }
+
+  async isItemNameDisplayed(expectedItemName: string) {
+    await $(
+      `//android.widget.TextView[@resource-id="com.arlosoft.macrodroid:id/name" and @text="${expectedItemName}"]`
+    ).isDisplayed();
+  }
+
+  async isItemDescDisplayed(expectedItemDesc: string) {
+    await $(
+      `//android.widget.TextView[@resource-id="com.arlosoft.macrodroid:id/description" and @text="${expectedItemDesc}"]`
     ).isDisplayed();
   }
 
