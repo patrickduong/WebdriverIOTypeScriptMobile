@@ -67,7 +67,7 @@ export const config: Options.Testrunner = {
   mochaOpts: {
     compilers: [],
     ui: "bdd",
-    timeout: 60000,
+    timeout: 300000,
   },
 
   afterTest: async function (

@@ -1,4 +1,4 @@
-import BasePage from "./base.page";
+import BasePage from "../base.page";
 class AddContraintsPage extends BasePage {
   async addContraintType(
     typeAction: string,
