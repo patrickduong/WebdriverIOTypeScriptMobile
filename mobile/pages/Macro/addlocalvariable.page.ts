@@ -1,16 +1,29 @@
 import BasePage from "../base.page";
 class AddLocalVariablePage extends BasePage {
-  async enterVariableName(variableName: string[]) {
-    await $(
+  get variableTypeSpinner() {
+    return $(
+      `android=new UiSelector().resourceId("com.arlosoft.macrodroid:id/variable_new_variable_type_spinner")`
+    );
+  }
+
+  get variableDialogName() {
+    return $(
       `android=new UiSelector().resourceId("com.arlosoft.macrodroid:id/variable_new_variable_dialog_name")`
-    ).sendKeys(variableName);
+    );
+  }
+
+  get variableDialogValue() {
+    return $(
+      `//android.widget.EditText[@resource-id="com.arlosoft.macrodroid:id/enter_variable_dialog_value"]`
+    );
+  }
+
+  async enterVariableName(variableName: string[]) {
+    await this.variableDialogName.sendKeys(variableName);
   }
 
   async selectVariableType(variableType: string) {
-    await $(
-      `android=new UiSelector().resourceId("com.arlosoft.macrodroid:id/variable_new_variable_type_spinner")`
-    ).click();
-
+    await this.variableTypeSpinner.click();
     await this.clickByText(variableType);
   }
 
@@ -24,22 +37,14 @@ class AddLocalVariablePage extends BasePage {
     ).click();
     switch (variableType) {
       case "String":
-        await $(
-          `//android.widget.EditText[@resource-id="com.arlosoft.macrodroid:id/enter_variable_dialog_value"]`
-        ).sendKeys(variableValue);
+        await this.variableDialogValue.sendKeys(variableValue);
         break;
       case "Integer":
-        await $(
-          `//android.widget.EditText[@resource-id="com.arlosoft.macrodroid:id/enter_variable_dialog_value"]`
-        ).clearValue();
-        await $(
-          `//android.widget.EditText[@resource-id="com.arlosoft.macrodroid:id/enter_variable_dialog_value"]`
-        ).pressKeyCode(variableValue);
+        await this.variableDialogValue.clearValue();
+        await this.variableDialogValue.pressKeyCode(variableValue);
         break;
       case "Decimal":
-        await $(
-          `//android.widget.EditText[@resource-id="com.arlosoft.macrodroid:id/enter_variable_dialog_value"]`
-        ).pressKeyCode(variableValue);
+        await this.variableDialogValue.pressKeyCode(variableValue);
         break;
       case "Boolean":
         await $(
