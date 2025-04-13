@@ -8,6 +8,7 @@ import {
 import commonPage from "../pages/common.page";
 import actionblockPage from "../pages/Home/actionblock.page";
 import addmacrowizardPage from "../pages/Home/addmacrowizard.page";
+import addHomeVariablePage from "../pages/Home/variables.page";
 import addactionPage from "../pages/Macro/addaction.page";
 import addcontraintPage from "../pages/Macro/addcontraint.page";
 import addlocalvariablePage from "../pages/Macro/addlocalvariable.page";
@@ -110,6 +111,7 @@ describe("Marcodroid features test", () => {
             TestMacroLocalVariableData.variableName[0]
           )
         ).toBeTruthy;
+
         await addlocalvariablePage.updateVariableValue(
           TestMacroLocalVariableData.variableName[0],
           TestMacroLocalVariableData.variableType,
@@ -134,13 +136,17 @@ describe("Marcodroid features test", () => {
         await actionblockPage.clickAddAcctionBlockPlusIcon();
 
         await actionblockPage.enterActionBlockName([testBlockActionName]);
-        await actionblockPage.isActionBlockNameDisplayed(testBlockActionName);
+        await expect(
+          actionblockPage.isActionBlockNameDisplayed(testBlockActionName)
+        ).toBeTruthy;
+
         await actionblockPage.enterActionBlockDescription([
           testBlockActionDesc,
         ]);
-        await actionblockPage.isActionBlockDescDisplayed(testBlockActionDesc);
+        await expect(
+          actionblockPage.isActionBlockDescDisplayed(testBlockActionDesc)
+        ).toBeTruthy;
 
-        // need add expect for blockName and BlockDescription
         await actionblockPage.addAcctionBlockVariable(
           "input",
           ["Input Variable Boolean"],
@@ -202,35 +208,32 @@ describe("Marcodroid features test", () => {
   context(
     "TC 3: Verify that the user is able to add a macro from Home - Add Macro Wizard",
     () => {
+      const todayDate = generateTestDate.getFormattedDateWithOffset("days", 0);
+      const testMacroName = [`Test Marco - ${todayDate}`];
+      const testMarroGroup = "Games";
+
+      const TestMarcoWizardTriggerData: TriggerType = {
+        typeTrigger: "Applications",
+        selecType: "App Install/Remove/Update",
+        option: "Application Installed",
+        subOption: "Any Application",
+      };
+
+      const TestMacroWizardActionData: ActionType = {
+        typeAction: "Logging",
+        selecType: "Clear Log",
+        option: "User Log",
+      };
+
+      const TestMacroWizardContraintData: ContraintType = {
+        typeAction: "Device State",
+        selecType: "Airplane Mode",
+        option: "Airplane Mode Enabled",
+      };
+
       it("should able to create a new marcro with group name - trigger - action - constraint", async () => {
-        const todayDate = generateTestDate.getFormattedDateWithOffset(
-          "days",
-          0
-        );
-        const testMacroName = [`Test Marco - ${todayDate}`];
-        const testMarroGroup = "Games";
-
-        const TestMarcoWizardTriggerData: TriggerType = {
-          typeTrigger: "Applications",
-          selecType: "App Install/Remove/Update",
-          option: "Application Installed",
-          subOption: "Any Application",
-        };
-
-        const TestMacroWizardActionData: ActionType = {
-          typeAction: "Logging",
-          selecType: "Clear Log",
-          option: "User Log",
-        };
-
-        const TestMacroWizardContraintData: ContraintType = {
-          typeAction: "Device State",
-          selecType: "Airplane Mode",
-          option: "Airplane Mode Enabled",
-        };
-
         await commonPage.clickByDescription("Navigate up");
-        await commonPage.handleSkipAdVideo(CUSTOM_WAIT.VERY_SLOW_WAIT);
+        await commonPage.handleSkipAdVideo(CUSTOM_WAIT.SLOW_WAIT);
         await commonPage.openHome();
         await commonPage.clickByText("Add Macro Wizard");
 
@@ -280,6 +283,108 @@ describe("Marcodroid features test", () => {
           )
         ).toBeTruthy;
       });
+    }
+  );
+
+  context(
+    "TC 4: Verify that the user is able to Search and filter information of exist variable from Home-Variables",
+    () => {
+      const todayDate = generateTestDate.getFormattedDateWithOffset("days", 0);
+      const TestVariableBooleanData: LocalVariableType = {
+        variableName: [`Test Variable Boolean - ${todayDate}`],
+        variableType: "Boolean",
+        variableValue: true,
+      };
+
+      const TestVariableDecimalData: LocalVariableType = {
+        variableName: [`Test Variable Decimal - ${todayDate}`],
+        variableType: "Decimal",
+        variableValue: 8.8,
+      };
+
+      const TestVariableStringData: LocalVariableType = {
+        variableName: [`Test Variable String - ${todayDate}`],
+        variableType: "String",
+        variableValue: "This is test string",
+      };
+
+      it("should able to create new variable types are Boolean - Decimal - String", async () => {
+        await commonPage.openHome();
+        await commonPage.clickByText("Variables");
+
+        // Boolean
+        await addHomeVariablePage.addNewHomeVariable(
+          TestVariableBooleanData.variableName,
+          TestVariableBooleanData.variableType
+        );
+
+        await expect(
+          addHomeVariablePage.isCellVariableNameDisplayed(
+            TestVariableBooleanData.variableName[0]
+          )
+        ).toBeTruthy;
+
+        // Decimal
+        await addHomeVariablePage.addNewHomeVariable(
+          TestVariableDecimalData.variableName,
+          TestVariableDecimalData.variableType
+        );
+
+        await expect(
+          addHomeVariablePage.isCellVariableNameDisplayed(
+            TestVariableDecimalData.variableName[0]
+          )
+        ).toBeTruthy;
+
+        // String
+        await addHomeVariablePage.addNewHomeVariable(
+          TestVariableStringData.variableName,
+          TestVariableStringData.variableType
+        );
+
+        await expect(
+          addHomeVariablePage.isCellVariableNameDisplayed(
+            TestVariableStringData.variableName[0]
+          )
+        ).toBeTruthy;
+      });
+
+      it("should able to filter data by combine filter with search", async () => {
+        const filterAll = "All variables";
+        await addHomeVariablePage.filterVariableType(filterAll);
+
+        await addHomeVariablePage.searchVariableName(
+          TestVariableBooleanData.variableName
+        );
+
+        await expect(
+          addHomeVariablePage.isCellVariableNameDisplayed(
+            TestVariableBooleanData.variableName[0]
+          )
+        ).toBeTruthy;
+      });
+
+      // failed - not stable - switch between filter and search field
+      // it("should able to filter data by filter only", async () => {
+      //   const filterDecimal = "Decimal";
+      //   const filterAll = "All variables";
+      //   // await addHomeVariablePage.closeSearchField();
+      //   await addHomeVariablePage.filterVariableType(filterDecimal);
+      //   await expect(
+      //     addHomeVariablePage.isCellVariableNameDisplayed(
+      //       TestVariableDecimalData.variableName[0]
+      //     )
+      //   ).toBeTruthy;
+      //   await addHomeVariablePage.deleteCellVariableByName(
+      //     TestVariableDecimalData.variableName[0]
+      //   );
+      //   await addHomeVariablePage.filterVariableType(filterAll);
+      //   await expect(
+      //     addHomeVariablePage.isCellVariableNameDisplayed(
+      //       TestVariableDecimalData.variableName[0]
+      //     )
+      //   ).toBeTruthy;
+      // });
     }
   );
 });

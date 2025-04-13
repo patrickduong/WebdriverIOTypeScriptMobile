@@ -26,11 +26,12 @@ class AddHomeVariablePage extends BasePage {
     );
   }
 
-  async removeCellVariableByName(cellVariableName: string) {
+  async deleteCellVariableByName(cellVariableName: string) {
     await $(
-      `//*[@text='${cellVariableName}']/following-sibling::android.widget.ImageButton`
+      `//android.widget.TextView[@text='${cellVariableName}']/following-sibling::android.widget.ImageButton[@content-desc="Delete"]`
     ).click();
-    this.clickByText("OK");
+
+    await this.clickByText("OK");
   }
 
   async isCellVariableNameDisplayed(expectedCellVariableName: string) {
@@ -45,25 +46,25 @@ class AddHomeVariablePage extends BasePage {
     }
     (await this.searchField).click();
     (await this.searchField).sendKeys(variableName);
-    driver.hideKeyboard();
+    await this.searchField.hideKeyboard();
   }
 
   async closeSearchField() {
-    if (await this.searchField.isDisplayed()) {
-      (await this.closeSearchButton).click();
-    }
+    (await this.closeSearchButton).click();
+    (await this.closeSearchButton).click();
   }
 
   async filterVariableType(variableType: string) {
     if (!(await addlocalvariablePage.variableTypeSpinner.isDisplayed())) {
       (await this.filterButton).click();
+      await this.clickByText(variableType);
     }
-    (await addlocalvariablePage.variableTypeSpinner).click();
-    this.clickByText(variableType);
+    await this.clickByText(variableType);
   }
 
   async addNewHomeVariable(variableName: string[], variableType: string) {
-    addlocalvariablePage.addNewVariable(variableName, variableType);
+    await this.clickImageButton("Add Category");
+    await addlocalvariablePage.addNewVariable(variableName, variableType);
   }
 }
 
