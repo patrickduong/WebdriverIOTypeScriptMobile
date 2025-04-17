@@ -1,4 +1,5 @@
 import type { Options } from "@wdio/types";
+import { appStateManager } from "../utils/appStateManager";
 import { androidDeviceCapabilities } from "./config/capabilities";
 import { JSON_OUTPUT_DIR } from "./static/pathConstants";
 
@@ -78,6 +79,14 @@ export const config: Options.Testrunner = {
     if (!passed) {
       await driver.takeScreenshot();
     }
+  },
+
+  beforeSuite: async () => {
+    await appStateManager.restore();
+  },
+
+  afterSuite: async () => {
+    await appStateManager.save();
   },
 
   // onComplete: function () {
